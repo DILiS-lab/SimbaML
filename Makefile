@@ -6,6 +6,7 @@ install:
 dev-install:
 	pip install -r requirements.txt
 	pip install -r dev_requirements.txt
+	pip install -r docs_requirements.txt
 
 test: simba_ml tests
 	coverage erase
