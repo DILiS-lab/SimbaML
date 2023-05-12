@@ -50,6 +50,5 @@ setup(
             "simba_ml = simba_ml.cli.__main__:main",
         ],
     },
-    license_files=("LICENSE.txt",),
-    data_files=[("man/man1", ["man/simba_ml.1"])],
+    license_files=("LICENSE.txt",)
 )
