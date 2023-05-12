@@ -7,8 +7,8 @@ Welcome to SimbaML's documentation!
 
 **Useful links**:
 :ref:`installation` |
-`Source Repository <https://gitlab.hpi.de/mpws2022br1/simba_ml>`_ |
-`Issue Tracker <https://gitlab.hpi.de/mpws2022br1/simba_ml/-/issues>`_ |
+`Source Repository <https://github.com/DILiS-lab/SimbaML>`_ |
+`Issue Tracker <https://github.com/DILiS-lab/SimbaML/issues>`_ |
 `Mailing List <mpws2022br1@hpi.de>`_
 
 **SimbaML** is a tool for generating time-series data by using ordinary differential equations.

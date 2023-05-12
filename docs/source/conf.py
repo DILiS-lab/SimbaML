@@ -55,7 +55,7 @@ html_favicon = "_static/simba_ml_logo.jpg"
 html_static_path = ['_static']
 
 html_theme_options = {
-    "source_edit_link": "https://gitlab.hpi.de/mpws2022br1/simba_ml/-/blob/main/docs/source/{filename}",
+    "source_edit_link": "https://github.com/DILiS-lab/SimbaML/-/blob/main/docs/source/{filename}",
 }
 
 master_doc = "contents"

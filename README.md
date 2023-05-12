@@ -1,6 +1,3 @@
-[![pipeline status](https://gitlab.hpi.de/mpws2022br1/simba_ml/badges/main/pipeline.svg)](https://gitlab.hpi.de/mpws2022br1/simba_ml/-/commits/main)
-[![coverage report](https://gitlab.hpi.de/mpws2022br1/simba_ml/badges/main/coverage.svg)](https://gitlab.hpi.de/mpws2022br1/simba_ml/-/commits/main)
-
 # SimbaML
 
 ![Overview of the SimbaML framework](docs/source/_static/visualabstract.png)
@@ -158,4 +155,4 @@ result_df = synthetic_data_pipeline.main("ml_config.toml")
 
 # Documentation
 
-Comming soon!
+https://simbaml.readthedocs.io/

@@ -17,8 +17,9 @@ setup(
     author="Maximilian Kleissl, Björn Heyder, Julian Zabbarov, Lukas Drews",
     author_email="maximilian.kleissl@student.hpi.de,bjoern.heyder@student.hpi.de,julian.zabbarov@student.hpi.de,lukas.drews@student.hpi.de",
     project_urls={
-        "Bug Tracker": "https://gitlab.hpi.de/mpws2022br1/simba_ml/issues",
-        "Source Code": "https://gitlab.hpi.de/mpws2022br1/simba_ml/",
+        "Bug Tracker": "https://github.com/DILiS-lab/SimbaML/issues",
+        "Source Code": "https://github.com/DILiS-lab/SimbaML",
+        "Documentation": "https://simbaml.readthedocs.io"
     },
     description=DESCRIPTION,
     long_description=README,
