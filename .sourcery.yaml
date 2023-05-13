@@ -1,0 +1,38 @@
+ignore: # A list of paths or files which Sourcery will ignore.
+  - .git
+  - venv
+  - .venv
+  - env
+  - .env
+  - .tox
+  - simba_ml/_version.py
+
+rule_settings:
+  enable:
+    - default
+    - gpsg
+  disable:
+    - avoid-single-character-names-variables
+    - docstrings-for-functions
+    - avoid-global-variables
+    - require-return-annotation
+    - docstrings-for-modules
+    - require-parameter-annotation
+
+rules:
+  - id: use-logging
+    description: Use logging instead of print
+    pattern: print(${printed_text})
+  - id: no-complex-if-expressions
+    description: Only use conditional expressions for simple cases
+    explanation: |
+        Each portion [of the conditional expression] must fit on one line: `true-expression`, `if-expression`, `else-expression`. Use a complete if statement when things get more complicated.
+        From Google Style Guide [2.11.4](https://google.github.io/styleguide/pyguide.html#2114-decision)
+    pattern: ${value} if ${test} else ${default}
+    condition: value.character_count() > 80 or test.character_count() > 80 or default.character_count() > 80
+    tests:
+        - no-match: a = 1 if cond else 2
+        - match: a = 1 if this_is_an_incredibly_long_condition_that_is_more_than_80_characters_long_no_joking_around else 2
+        - match: a = this_is_an_incredibly_long_value_that_is_more_than_80_characters_long_no_joking_around if cond else 2
+        - match: a = 1 if cond else this_is_an_incredibly_long_value_that_is_more_than_80_characters_long_no_joking_around
+        - match: a = 1 if cond else this_is_an_incredibly_long_value + is_more_than_80_characters_long_no_joking_around()
