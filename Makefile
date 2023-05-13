@@ -21,7 +21,7 @@ lint: simba_ml
 	sourcery review simba_ml --check 
 	mypy --pretty simba_ml/ --disable-error-code import --disable-error-code no-any-return --strict
 	find simba_ml ! -iwholename "simba_ml\/\_version\.py" -name "*.py" | xargs darglint -v 2
-	black simba_ml --check
+	black simba_ml --check --exclude _version.py
 
 tests-lint: simba_ml tests
 	pycodestyle --max-line-length=88 --ignore E203,W503 --select W504 tests
