@@ -37,6 +37,19 @@ For more detailed installation instructions and requirements, see :ref:`installa
 
 For an example usage of SimbaML, see :ref:`quickstart`.
 
+Reference
+---------
+
+When using SimbaML in a scientific publication, please include the following references to relevant papers, along with any model-specific references that are applicable to your research.
+
+.. raw:: latex
+  @article{simba_ml,
+    title={SimbaML: Connecting Mechanistic Models and Machine Learning with Augmented Data},
+    author={Maixmilian Kleissl and Lukas Drews and Benedict B. Heyder and Julian Zabbarov and Pascal Iversen and Simon Witzke and Bernhard Y. Renard and Katharina Baum},
+    journal={arXiv preprint arXiv:2304.04000},
+    year={2023}
+    }
+
 Links
 -----
 

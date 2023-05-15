@@ -27,4 +27,4 @@ For further details on how to install Tensorflow on ARM-based MacOS devices, see
 
 # Documentation
 
-We provide detailed documentation for SimbaML here: https://simbaml.readthedocs.io/. Happy exploring!
+We provide detailed documentation for SimbaML here: https://simbaml.readthedocs.io/.
