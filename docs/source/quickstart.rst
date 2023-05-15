@@ -1,3 +1,5 @@
+.. _quickstart:
+
 Quickstart
 ==========
 
@@ -11,6 +13,7 @@ We generate noisy data using acustom ODE-system. In this case we chose a simple 
 1. Import the necessary modules.
 
 .. code-block:: python
+
   from simba_ml.simulation import (
       system_model,
       species,
@@ -27,6 +30,7 @@ We generate noisy data using acustom ODE-system. In this case we chose a simple 
 2. Define model name and entities.
 
 .. code-block:: python
+
   name = "SIR"
   specieses = [
       species.Species(
@@ -45,6 +49,7 @@ We generate noisy data using acustom ODE-system. In this case we chose a simple 
 3. Define kinetic parameters of the model.
 
 .. code-block:: python
+
   kinetic_parameters: dict[str, kinetic_parameters_module.KineticParameter[float]] = {
       "beta": kinetic_parameters_module.ConstantKineticParameter(
           distributions.NormalDistribution(0.2, 0.05)
@@ -57,6 +62,7 @@ We generate noisy data using acustom ODE-system. In this case we chose a simple 
 4. Define the derivative function.
 
 .. code-block:: python
+
   def deriv(
       _t: float, y: list[float], arguments: dict[str, float]
   ) -> tuple[float, float, float]:
@@ -79,6 +85,7 @@ We generate noisy data using acustom ODE-system. In this case we chose a simple 
 5. Add noise to the ODE system and the output data.
 
 .. code-block:: python
+
   noiser = noisers.AdditiveNoiser(distributions.LogNormalDistribution(0, 2))
   derivative_noiser = derivative_noisers.AdditiveDerivNoiser(
       distributions.NormalDistribution(0, 1)
@@ -87,6 +94,7 @@ We generate noisy data using acustom ODE-system. In this case we chose a simple 
 6. Add sparsifiers to remove constant suffix from generated data.
 
 .. code-block:: python
+
   sparsifier1 = sparsifier_module.ConstantSuffixRemover(n=5, epsilon=1, mode="absolute")
   sparsifier2 = sparsifier_module.ConstantSuffixRemover(n=5, epsilon=0.1, mode="relative")
   sparsifier = sparsifier_module.SequentialSparsifier(
@@ -96,6 +104,7 @@ We generate noisy data using acustom ODE-system. In this case we chose a simple 
 7. Build the model. Generate 1000 timestamps per time series.
 
 .. code-block:: python
+
   sm = constraints.SpeciesValueTruncator(
       system_model.SystemModel(
           name,
@@ -111,6 +120,7 @@ We generate noisy data using acustom ODE-system. In this case we chose a simple 
 8. Generate and store 100 csv files in custom path.
 
 .. code-block:: python
+
   generators.TimeSeriesGenerator(sm).generate_csvs(100, "simulated_data")
 
 Run ML Pipelines
@@ -119,8 +129,9 @@ Run ML Pipelines
 We support multiple ML experiment pipelines, which can run by one command.
 In this case we run the synthetic data pipeline that only uses the just generated data.
 The details of the ML experiments get specified in the config file.
-You find an examplary config for the synthetic data pipeline under :ref:`Usage/Machine Learning/Time-Series-Prediction/Pipelines/synthetic_data_pipeline`
+You find an examplary config for the synthetic data pipeline under :ref:`synthetic_data_pipeline`
 
 .. code-block:: python
+
   from simba_ml.prediction.time_series.pipelines import synthetic_data_pipeline
   result_df = synthetic_data_pipeline.main("ml_config.toml")

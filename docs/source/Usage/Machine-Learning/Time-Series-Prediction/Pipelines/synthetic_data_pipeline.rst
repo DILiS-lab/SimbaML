@@ -1,3 +1,5 @@
+.. _synthetic_data_pipeline:
+
 Synthetic Data Pipeline
 =======================
 

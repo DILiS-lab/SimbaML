@@ -3,10 +3,9 @@ Contributor's Guide
 
 Installation
 ---------------
-Clone the repository and install the requirements, which are needed to develope.
+Clone the repository and install the requirements, which are needed to develop.
 
 ..  code-block:: bash
-    :caption: Installation of development-requirements
 
     make dev-install
 
@@ -14,7 +13,6 @@ Clone the repository and install the requirements, which are needed to develope.
 Test the installation by running tests and lints:
 
 ..  code-block:: bash
-    :caption: Running tests and lints
 
     make test # This will run all tests
     make lint # This will lint the simba_ml source code

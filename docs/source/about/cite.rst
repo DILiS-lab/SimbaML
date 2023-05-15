@@ -1,8 +1,10 @@
-Please cite us
-===============
+Reference
+---------
 
-::
+When using SimbaML in a scientific publication, please include the following references to relevant papers, along with any model-specific references that are applicable to your research.
 
+..  code-block:: latex
+    
     @inproceedings{
         anonymous2023simbaml,
         title={Simba{ML}: Connecting Mechanistic Models and Machine Learning with Augmented Data},
