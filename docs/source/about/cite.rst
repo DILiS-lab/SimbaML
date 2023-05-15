@@ -1,7 +1,7 @@
 Reference
 ---------
 
-When using SimbaML in a scientific publication, please include the following references to relevant papers, along with any model-specific references that are applicable to your research.
+When using SimbaML in a scientific publication, please include the following references to relevant papers.
 
 ..  code-block:: latex
     
