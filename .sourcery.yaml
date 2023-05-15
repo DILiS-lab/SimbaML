@@ -18,6 +18,7 @@ rule_settings:
     - require-return-annotation
     - docstrings-for-modules
     - require-parameter-annotation
+    - pandas-avoid-inplace
 
 rules:
   - id: use-logging
