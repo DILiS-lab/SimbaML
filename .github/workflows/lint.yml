@@ -1,4 +1,4 @@
-name: Pytest
+name: Lint
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
         export PYTHONPATH="${PYTHONPATH}:$(pwd)"
         pip install -r requirements.txt
         pip install -r dev_requirements.txt
-    - name: Run Tests
+    - name: Lint
       run: |
-        make test
-        coverage xml
+        make lint
+        make tests-lint
