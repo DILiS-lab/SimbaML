@@ -9,8 +9,9 @@ on:
       - main
 
 jobs:
-  Test:
+  Lint:
     runs-on: ubuntu-latest
+    container: mk1990hpi/simba_ml_env:latest
     strategy:
       matrix:
         python-version: ["3.10"]
@@ -25,6 +26,9 @@ jobs:
         export PYTHONPATH="${PYTHONPATH}:$(pwd)"
         pip install -r requirements.txt
         pip install -r dev_requirements.txt
+    - name: Sourcery Login
+      run: |
+        sourcery login --token $SOURCERY_TOKEN
     - name: Lint
       run: |
         make lint
