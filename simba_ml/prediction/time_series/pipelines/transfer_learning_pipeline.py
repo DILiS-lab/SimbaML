@@ -1,9 +1,9 @@
 """Pipeline for running predictions."""
+import os
 import argparse
 import logging
 import random
 import tomli
-import os
 
 import dacite
 from numpy import typing as npt
@@ -47,10 +47,8 @@ def __evaluate_metrics(
     config: transfer_learning_pipeline.PipelineConfig,
 ) -> dict[str, np.float64]:
     if config.data.export_path is not None:
-        if not os.path.exists(
-                    os.path.join(os.getcwd(), config.data.export_path)
-                ):
-                    os.mkdir(os.path.join(os.getcwd(), config.data.export_path))
+        if not os.path.exists(os.path.join(os.getcwd(), config.data.export_path)):
+            os.mkdir(os.path.join(os.getcwd(), config.data.export_path))
         for i in range(predictions.shape[0]):
             pd.DataFrame(
                 predictions[i, :, :],
