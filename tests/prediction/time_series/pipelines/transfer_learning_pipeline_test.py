@@ -1,4 +1,7 @@
 """Test function for the pipeline."""
+import os
+import shutil
+
 import pytest
 import pandas as pd
 
@@ -38,3 +41,16 @@ def test_transfer_learning_pipeline_results_correct_type_and_format_3_spec() -> 
     assert results.shape == (3, 2)
     assert isinstance(results["Keras Dense Neural Network"], pd.Series)
     assert isinstance(results["PyTorch Lightning Dense Neural Network"], pd.Series)
+
+
+def test_transfer_learning_pipeline_export() -> None:
+    EXPORT_PATH = "tests/prediction/time_series/test_data/export"
+    _ = transfer_learning_pipeline.main(
+        "tests/prediction/time_series/conf/transfer_learning_pipeline_export.toml"
+    ).T
+    assert len(os.listdir(os.path.join(os.getcwd(), EXPORT_PATH))) == 50
+    assert os.listdir(os.path.join(os.getcwd(), EXPORT_PATH))[0].endswith(".csv")
+    assert pd.read_csv(
+        os.path.join(os.getcwd(), EXPORT_PATH, "output_0.csv")
+    ).shape == (1, 2)
+    shutil.rmtree(os.path.join(os.getcwd(), EXPORT_PATH))

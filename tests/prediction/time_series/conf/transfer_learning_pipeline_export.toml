@@ -1,0 +1,33 @@
+plugins = [
+  "tests.example_plugin",
+  "simba_ml.prediction.time_series.models.keras",
+  "simba_ml.prediction.time_series.models.pytorch_lightning"
+]
+
+metrics = [
+  "mean_absolute_error",
+  "mean_squared_error",
+  "mean_absolute_percentage_error"
+]
+
+[[models]]
+id = "KerasDenseNeuralNetworkTransferLearning"
+
+[[models]]
+id = "PytorchLightningDenseNeuralNetworkTransferLearning"
+
+[models.training_params]
+epochs = 1
+
+[data]
+observed = "/tests/prediction/time_series/test_data/num_species_1/real/"
+synthetic = "/tests/prediction/time_series/test_data/num_species_1/simulated/"
+split_axis = "vertical"
+test_split = 0.2
+export_path = "tests/prediction/time_series/test_data/export"
+
+[data.time_series]
+input_length = 1
+output_length = 1
+input_features = ["Infected", "Recovered"]
+output_features = ["Infected", "Recovered"]

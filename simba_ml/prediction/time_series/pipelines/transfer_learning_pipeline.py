@@ -3,6 +3,7 @@ import argparse
 import logging
 import random
 import tomli
+import os
 
 import dacite
 from numpy import typing as npt
@@ -43,7 +44,21 @@ def __evaluate_metrics(
     y_test: npt.NDArray[np.float64],
     predictions: npt.NDArray[np.float64],
     experiment_logger: wandb.WandbLogger,
+    config: transfer_learning_pipeline.PipelineConfig,
 ) -> dict[str, np.float64]:
+    if config.data.export_path is not None:
+        if not os.path.exists(
+                    os.path.join(os.getcwd(), config.data.export_path)
+                ):
+                    os.mkdir(os.path.join(os.getcwd(), config.data.export_path))
+        for i in range(predictions.shape[0]):
+            pd.DataFrame(
+                predictions[i, :, :],
+                columns=config.data.time_series.output_features,
+            ).to_csv(
+                os.path.join(os.getcwd(), config.data.export_path, f"output_{i}.csv"),
+                index=False,
+            )
     evaluation = {
         metric_id: metric_function(y_true=y_test, y_pred=predictions)
         for metric_id, metric_function in metrics.items()
@@ -111,6 +126,7 @@ def main(config_path: str) -> pd.DataFrame:
             dataloader.y_test,
             model.predict(dataloader.X_test),
             wandb_logger,
+            config,
         )
         wandb_logger.finish()
 

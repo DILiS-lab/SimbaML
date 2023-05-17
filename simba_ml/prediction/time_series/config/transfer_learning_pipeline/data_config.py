@@ -14,3 +14,4 @@ class DataConfig:
     time_series: time_series_config.TimeSeriesConfig
     test_split: float = 0.2
     split_axis: str = "vertical"
+    export_path: str = None
