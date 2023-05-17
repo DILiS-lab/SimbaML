@@ -27,7 +27,7 @@ jobs:
         pip install -r dev_requirements.txt
     - name: Sourcery Login
       run: |
-        sourcery login --token $SOURCERY_TOKEN
+        sourcery login --token ${{ secrets.SOURCERY_TOKEN }}
     - name: Lint
       run: |
         make lint
