@@ -201,7 +201,7 @@ def test_msle():
 def test_rmsle_1():
     y_true = np.array([[[1, 2]], [[3, 4]]])
     y_pred = np.array([[[1, 2]], [[3, 4]]])
-    assert metrics.rmsle(y_true, y_pred) == 0
+    assert np.isclose(metrics.rmsle(y_true, y_pred), 0, rtol=1e-08)
 
 
 def test_rmsle_2():
@@ -209,7 +209,7 @@ def test_rmsle_2():
         [[[np.e**2 - 1, np.e**2 - 1]], [[2 * np.e**2 - 1, 2 * np.e**2 - 1]]]
     )
     y_pred = np.array([[[0, 0]], [[1, 1]]])
-    assert metrics.rmsle(y_true, y_pred) == 2
+    assert np.isclose(metrics.rmsle(y_true, y_pred), 2, rtol=1e-08)
 
 
 def test_mean_absolute_scaled_error_1():

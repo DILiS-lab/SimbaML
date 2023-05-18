@@ -11,56 +11,56 @@ from tests.prediction.help_functions import create_dummy_csvs
 
 
 def test_dataframes_from_csvs_returns_dataframe():
-    os.makedirs(os.getcwd() + "/tests/prediction/data/csvs/", exist_ok=True)
-    create_dummy_csvs(path=os.getcwd() + "/tests/prediction/data/csvs/")
+    os.makedirs(f"{os.getcwd()}/tests/prediction/data/csvs/", exist_ok=True)
+    create_dummy_csvs(path=f"{os.getcwd()}/tests/prediction/data/csvs/")
     assert isinstance(
         preprocessing.read_dataframes_from_csvs(
-            os.getcwd() + "/tests/prediction/data/csvs/"
+            f"{os.getcwd()}/tests/prediction/data/csvs/"
         )[0],
         pd.DataFrame,
     )
-    shutil.rmtree(os.getcwd() + "/tests/prediction/data/csvs/")
+    shutil.rmtree(f"{os.getcwd()}/tests/prediction/data/csvs/")
 
 
 def test_dataframes_from_csvs_raises_error_for_empty_directory():
-    os.makedirs(os.getcwd() + "/tests/prediction/data/empty/", exist_ok=True)
+    os.makedirs(f"{os.getcwd()}/tests/prediction/data/empty/", exist_ok=True)
     with pytest.raises(ValueError):
         preprocessing.read_dataframes_from_csvs(
-            os.getcwd() + "/tests/prediction/data/empty/"
+            f"{os.getcwd()}/tests/prediction/data/empty/"
         )
-    shutil.rmtree(os.getcwd() + "/tests/prediction/data/empty/")
+    shutil.rmtree(f"{os.getcwd()}/tests/prediction/data/empty/")
 
 
 def test_dataframes_from_csvs_raises_error_for_no_csv_files_in_folder():
-    os.makedirs(os.getcwd() + "/tests/prediction/data/non_csv/", exist_ok=True)
+    os.makedirs(f"{os.getcwd()}/tests/prediction/data/non_csv/", exist_ok=True)
     with open(
-        os.getcwd() + "/tests/prediction/data/non_csv/test.txt", "w", encoding="utf-8"
+        f"{os.getcwd()}/tests/prediction/data/non_csv/test.txt", "w", encoding="utf-8"
     ) as file:
         file.write("test")
     with pytest.raises(ValueError):
         preprocessing.read_dataframes_from_csvs(
-            os.getcwd() + "/tests/prediction/data/non_csv/"
+            f"{os.getcwd()}/tests/prediction/data/non_csv/"
         )
-    shutil.rmtree(os.getcwd() + "/tests/prediction/data/non_csv/")
+    shutil.rmtree(f"{os.getcwd()}/tests/prediction/data/non_csv/")
 
 
 def test_dataframes_from_csvs_returns_correct_shape():
-    os.makedirs(os.getcwd() + "/tests/prediction/data/shape/", exist_ok=True)
-    create_dummy_csvs(os.getcwd() + "/tests/prediction/data/shape/", 1, 2, 3)
+    os.makedirs(f"{os.getcwd()}/tests/prediction/data/shape/", exist_ok=True)
+    create_dummy_csvs(f"{os.getcwd()}/tests/prediction/data/shape/", 1, 2, 3)
     dataframes = preprocessing.read_dataframes_from_csvs(
-        os.getcwd() + "/tests/prediction/data/shape/"
+        f"{os.getcwd()}/tests/prediction/data/shape/"
     )
-    shutil.rmtree(os.getcwd() + "/tests/prediction/data/shape")
+    shutil.rmtree(f"{os.getcwd()}/tests/prediction/data/shape")
     assert dataframes[0].to_numpy().shape == (2, 3)
 
 
 def test_dataframes_from_csvs_returns_correct_data():
-    os.makedirs(os.getcwd() + "/tests/prediction/data/data/", exist_ok=True)
-    create_dummy_csvs(os.getcwd() + "/tests/prediction/data/data/", 1, 2, 3)
+    os.makedirs(f"{os.getcwd()}/tests/prediction/data/data/", exist_ok=True)
+    create_dummy_csvs(f"{os.getcwd()}/tests/prediction/data/data/", 1, 2, 3)
     dataframes = preprocessing.read_dataframes_from_csvs(
-        os.getcwd() + "/tests/prediction/data/data/"
+        f"{os.getcwd()}/tests/prediction/data/data/"
     )
-    shutil.rmtree(os.getcwd() + "/tests/prediction/data/data")
+    shutil.rmtree(f"{os.getcwd()}/tests/prediction/data/data")
     assert np.array_equal(
         dataframes[0].to_numpy(),
         [[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]],

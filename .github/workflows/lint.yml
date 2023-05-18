@@ -1,0 +1,34 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install -r dev_requirements.txt
+    - name: Sourcery Login
+      run: |
+        sourcery login --token ${{ secrets.SOURCERY_TOKEN }}
+    - name: Lint
+      run: |
+        export PYTHONPATH=$PYTHONPATH:$(pwd)
+        make lint
+        make tests-lint
