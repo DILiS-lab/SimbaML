@@ -31,5 +31,7 @@ jobs:
         sourcery login --token ${{ secrets.SOURCERY_TOKEN }}
     - name: Lint
       run: |
-        make lint
+        pwd
+        ls
+        echo $PYTHONPATH
         make tests-lint
