@@ -23,6 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         export PYTHONPATH=$PYTHONPATH:$(pwd)
+        echo $PYTHONPATH
         pip install -r requirements.txt
         pip install -r dev_requirements.txt
     - name: Sourcery Login
