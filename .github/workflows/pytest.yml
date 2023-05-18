@@ -29,3 +29,4 @@ jobs:
       run: |
         make test
         coverage xml
+        coverage report --fail-under 100

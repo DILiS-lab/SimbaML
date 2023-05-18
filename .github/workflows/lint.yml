@@ -31,6 +31,7 @@ jobs:
         sourcery login --token ${{ secrets.SOURCERY_TOKEN }}
     - name: Lint
       run: |
+        export PYTHONPATH=$PYTHONPATH:$(pwd)
         pwd
         ls
         echo $PYTHONPATH
