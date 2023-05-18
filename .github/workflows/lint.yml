@@ -22,8 +22,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        export PYTHONPATH=$PYTHONPATH:$(pwd)
-        echo $PYTHONPATH
         pip install -r requirements.txt
         pip install -r dev_requirements.txt
     - name: Sourcery Login
@@ -32,7 +30,5 @@ jobs:
     - name: Lint
       run: |
         export PYTHONPATH=$PYTHONPATH:$(pwd)
-        pwd
-        ls
-        echo $PYTHONPATH
+        make lint
         make tests-lint
