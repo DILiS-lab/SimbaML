@@ -107,7 +107,7 @@ def test_x_test_data_is_not_exported_when_no_export_path_is_provided():
     with patch("simba_ml.prediction.export.export_input_batches") as mock_export:
         # pylint: disable=import-outside-toplevel
         cfg = data_config.DataConfig(
-            synthetic="/tests/prediction/time_series/test_data/num_species_1/simulated/",
+            synthetic="/tests/prediction/time_series/test_data/num_species_1/simulated/",  # pylint: disable=line-too-long
             observed="/tests/prediction/time_series/test_data/num_species_1/real/",
             time_series=time_series_config.TimeSeriesConfig(
                 input_features=["Infected", "Recovered"],
@@ -115,7 +115,7 @@ def test_x_test_data_is_not_exported_when_no_export_path_is_provided():
             ),
         )
         loader = transfer_learning_data_loader.TransferLearningDataLoader(cfg)
-        loader.X_test  # type: ignore[W0104]
+        loader.X_test  # pylint: disable=pointless-statement
         mock_export.assert_not_called()
 
 
@@ -132,7 +132,7 @@ def test_x_test_data_is_exported_when_export_path_already_exists():
         export_path=export_path,
     )
     loader = transfer_learning_data_loader.TransferLearningDataLoader(cfg)
-    _ = loader.X_test
+    loader.X_test  # pylint: disable=pointless-statement
     assert list(
         pd.read_csv(os.path.join(os.getcwd(), export_path, "input_0.csv")).columns
     ) == ["Infected", "Recovered"]
