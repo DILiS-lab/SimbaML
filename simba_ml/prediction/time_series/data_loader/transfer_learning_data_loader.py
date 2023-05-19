@@ -89,17 +89,17 @@ class TransferLearningDataLoader:
         if self.config.export_path is not None:
             if not os.path.exists(os.path.join(os.getcwd(), self.config.export_path)):
                 os.mkdir(os.path.join(os.getcwd(), self.config.export_path))
-            if self.__X_test is not None:
-                for i in range(self.__X_test.shape[0]):
-                    pd.DataFrame(
-                        self.__X_test[i, :, :],
-                        columns=self.config.time_series.input_features,
-                    ).to_csv(
-                        os.path.join(
-                            os.getcwd(), self.config.export_path, f"input_{i}.csv"
-                        ),
-                        index=False,
-                    )
+            assert self.__X_test is not None
+            for i in range(self.__X_test.shape[0]):
+                pd.DataFrame(
+                    self.__X_test[i, :, :],
+                    columns=self.config.time_series.input_features,
+                ).to_csv(
+                    os.path.join(
+                        os.getcwd(), self.config.export_path, f"input_{i}.csv"
+                    ),
+                    index=False,
+                )
         return self.X_test if self.__X_test is None else self.__X_test
 
     @property

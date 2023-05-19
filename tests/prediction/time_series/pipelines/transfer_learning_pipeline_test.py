@@ -45,6 +45,8 @@ def test_transfer_learning_pipeline_results_correct_type_and_format_3_spec() -> 
 
 def test_transfer_learning_pipeline_export() -> None:
     EXPORT_PATH = "tests/prediction/time_series/test_data/export"
+    if os.path.exists(os.path.join(os.getcwd(), EXPORT_PATH)):
+        os.rmdir(os.path.join(os.getcwd(), EXPORT_PATH))
     _ = transfer_learning_pipeline.main(
         "tests/prediction/time_series/conf/transfer_learning_pipeline_export.toml"
     ).T
