@@ -91,8 +91,7 @@ class TransferLearningDataLoader:
             if not os.path.exists(os.path.join(os.getcwd(), self.config.export_path)):
                 os.mkdir(os.path.join(os.getcwd(), self.config.export_path))
             assert self.__X_test is not None
-            if self.config.export_path:
-                export.export_input_batches(self.__X_test, self.config)
+            export.export_input_batches(self.__X_test, self.config)
         return self.X_test if self.__X_test is None else self.__X_test
 
     @property
