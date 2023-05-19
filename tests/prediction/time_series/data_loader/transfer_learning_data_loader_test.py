@@ -104,7 +104,7 @@ def test_x_test_data_is_exported_when_export_path_is_provided():
 
 
 def test_x_test_data_is_not_exported_when_no_export_path_is_provided():
-    with patch("simba_ml.prediction.export") as mock_export:
+    with patch("simba_ml.prediction.export.export_input_batches") as mock_export:
         # pylint: disable=import-outside-toplevel
         cfg = data_config.DataConfig(
             synthetic="/tests/prediction/time_series/test_data/num_species_1/simulated/",
