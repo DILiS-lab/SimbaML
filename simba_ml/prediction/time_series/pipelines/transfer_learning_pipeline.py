@@ -1,5 +1,5 @@
 """Pipeline for running predictions."""
-import os
+
 import argparse
 import logging
 import random
@@ -22,6 +22,7 @@ from simba_ml.prediction.logging import wandb_logger as wandb
 from simba_ml.prediction.time_series.config import (
     time_series_config,
 )
+from simba_ml.prediction import export
 
 logger = logging.getLogger(__name__)
 
@@ -47,14 +48,7 @@ def __evaluate_metrics(
     config: transfer_learning_pipeline.PipelineConfig,
 ) -> dict[str, np.float64]:
     if config.data.export_path is not None:
-        for i in range(predictions.shape[0]):
-            pd.DataFrame(
-                predictions[i, :, :],
-                columns=config.data.time_series.output_features,
-            ).to_csv(
-                os.path.join(os.getcwd(), config.data.export_path, f"output_{i}.csv"),
-                index=False,
-            )
+        export.export_output_batches(predictions, config.data)
     evaluation = {
         metric_id: metric_function(y_true=y_test, y_pred=predictions)
         for metric_id, metric_function in metrics.items()

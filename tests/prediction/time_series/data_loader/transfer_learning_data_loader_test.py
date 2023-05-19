@@ -95,7 +95,7 @@ def test_x_test_data_is_exported_when_export_path_is_provided():
         export_path=EXPORT_PATH,
     )
     loader = transfer_learning_data_loader.TransferLearningDataLoader(cfg)
-    _ = loader.X_test
+    loader.X_test
     assert list(
         pd.read_csv(os.path.join(os.getcwd(), EXPORT_PATH, "input_0.csv")).columns
     ) == ["Infected", "Recovered"]
