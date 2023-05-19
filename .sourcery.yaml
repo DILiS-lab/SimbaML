@@ -18,9 +18,7 @@ rule_settings:
     - require-return-annotation
     - docstrings-for-modules
     - require-parameter-annotation
-    - pandas-avoid-inplace
-    - no-loop-in-tests
-    - no-conditionals-in-tests
+
 
 rules:
   - id: use-logging

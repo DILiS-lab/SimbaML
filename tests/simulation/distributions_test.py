@@ -100,8 +100,9 @@ def test_vector_distribution_get_samples_from_hypercube():
     initial_condition = distributions.VectorDistribution(values)
     result = initial_condition.get_samples_from_hypercube(30)
     assert len(result) == 30
-    for i in range(3):
-        assert 10 <= result.count(values[i]) <= 11
+    assert 10 <= result.count(values[0]) <= 11
+    assert 10 <= result.count(values[1]) <= 11
+    assert 10 <= result.count(values[2]) <= 11
 
 
 def test_vector_distribution_throws_index_error_when_values_array_is_empty():

@@ -79,6 +79,10 @@ def test_dataframe_to_numpy_different_shape():
     data = [pd.DataFrame([[1, 2], [3, 4]]), pd.DataFrame([[5, 6], [7, 8], [9, 10]])]
     actual = preprocessing.convert_dataframe_to_numpy(data)
     expected = [np.array([[1, 2], [3, 4]]), np.array([[5, 6], [7, 8], [9, 10]])]
+    assert_arrays_equal(actual, expected)
+
+
+def assert_arrays_equal(actual, expected):
     for actual_value, expected_value in zip(actual, expected):
         assert np.array_equal(actual_value, expected_value)
 

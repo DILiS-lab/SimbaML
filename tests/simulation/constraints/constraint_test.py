@@ -13,6 +13,11 @@ from simba_ml.simulation.species import Species
 from simba_ml.simulation import distributions
 
 
+def delete_dir_if_empty(directory):
+    if len(os.listdir(directory)) == 0:
+        os.rmdir(directory)
+
+
 def test_get_clean_signal_has_correct_length():
     timestamps = 200
     sm = create_example_system_model(timestamps)
@@ -78,8 +83,7 @@ def test_generate_csv():
     generator.generate_csv()
     actual = pd.read_csv("./data/Constant function_0.csv").reset_index(drop=True)
     os.remove("./data/Constant function_0.csv")
-    if len(os.listdir("./data/")) == 0:
-        os.rmdir("./data/")
+    delete_dir_if_empty("./data/")
 
     assert expected.equals(actual)
 
@@ -93,8 +97,7 @@ def test_generate_csvs():
     generator.generate_csvs(n=1)
     actual = pd.read_csv("./data/Constant function_0.csv").reset_index(drop=True)
     os.remove("./data/Constant function_0.csv")
-    if len(os.listdir("./data/")) == 0:
-        os.rmdir("./data/")
+    delete_dir_if_empty("./data/")
 
     assert expected.equals(actual)
 

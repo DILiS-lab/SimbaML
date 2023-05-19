@@ -13,9 +13,13 @@ def test_constraint_holds_sum():
     pt = create_example_system_model(timestamps)
     generator = time_series_generator.TimeSeriesGenerator(pt)
     signal = generator.generate_signal()
+    assert_sums_equal(signal, 1000)
+
+
+def assert_sums_equal(signal, expected_sum):
     sums = signal.sum(axis=1)
     for s in sums:
-        assert math.isclose(s, 1000)
+        assert math.isclose(s, expected_sum)
 
 
 def create_example_system_model(number_of_timestamps=200):

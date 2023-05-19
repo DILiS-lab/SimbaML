@@ -51,13 +51,13 @@ def test_train_validation_sets_does_not_change_when_called_multiple_times():
     before = loader.list_of_train_validation_sets
     assert len(loader.list_of_train_validation_sets) == 1
     after = loader.list_of_train_validation_sets
-    for i, before_i in enumerate(before):
-        for j, before_i_j in enumerate(before_i):
-            for key in before_i_j.keys():
-                for k, _ in enumerate(before_i_j[key]):
-                    assert np.all(before_i_j[key][k] == after[i][j][key][k])
+    compare_train_validation_sets(before, after)
     loader.load_data()
     after = loader.list_of_train_validation_sets
+    compare_train_validation_sets(before, after)
+
+
+def compare_train_validation_sets(before, after):
     for i, before_i in enumerate(before):
         for j, before_i_j in enumerate(before_i):
             for key in before_i_j.keys():

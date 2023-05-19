@@ -88,7 +88,7 @@ class KeepExtremeValuesSparsifier(sparsifier_module.Sparsifier):
         for column in signal.columns:
             if column == name_of_extreme_value_column:
                 continue
-            signal.sort_values(column, inplace=True)
+            signal = signal.sort_values(column)
             assert name_of_extreme_value_column == signal.columns[-1]
             signal.iloc[: int(self.lower_bound * len(signal)), -1] = True
             signal.iloc[int((1 - self.upper_bound) * len(signal)) :, -1] = True
