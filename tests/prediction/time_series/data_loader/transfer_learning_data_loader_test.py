@@ -96,7 +96,7 @@ def test_x_test_data_is_exported_when_export_path_is_provided():
         export_path=export_path,
     )
     loader = transfer_learning_data_loader.TransferLearningDataLoader(cfg)
-    loader.X_test  # type: ignore[W0104]
+    loader.X_test  # pylint: disable=pointless-statement
     assert list(
         pd.read_csv(os.path.join(os.getcwd(), export_path, "input_0.csv")).columns
     ) == ["Infected", "Recovered"]
