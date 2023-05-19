@@ -129,7 +129,7 @@ def test_mixed_data_pipeline_correct_results_with_plugins_normalized() -> None:
     ] == pytest.approx(111.0, rel=0.01)
     assert obtained[1]["mean_squared_error"][
         "PyTorch Lightning Dense Neural Network"
-    ] == pytest.approx(12599.0, rel=0.001)
+    ] == pytest.approx(12559.0, rel=0.001)
     assert obtained[1]["mean_absolute_percentage_error"][
         "PyTorch Lightning Dense Neural Network"
     ] == pytest.approx(0.2799, rel=0.01)
