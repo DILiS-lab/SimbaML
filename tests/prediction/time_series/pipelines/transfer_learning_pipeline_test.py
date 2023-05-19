@@ -44,17 +44,17 @@ def test_transfer_learning_pipeline_results_correct_type_and_format_3_spec() -> 
 
 
 def test_transfer_learning_pipeline_export() -> None:
-    EXPORT_PATH = "tests/prediction/time_series/test_data/export"
-    if os.path.exists(os.path.join(os.getcwd(), EXPORT_PATH)):
-        os.rmdir(os.path.join(os.getcwd(), EXPORT_PATH))
+    export_path = "tests/prediction/time_series/test_data/export"
+    if os.path.exists(os.path.join(os.getcwd(), export_path)):
+        os.rmdir(os.path.join(os.getcwd(), export_path))
     _ = transfer_learning_pipeline.main(
         "tests/prediction/time_series/conf/transfer_learning_pipeline_export.toml"
     ).T
     assert (
-        len(os.listdir(os.path.join(os.getcwd(), EXPORT_PATH))) == 100
+        len(os.listdir(os.path.join(os.getcwd(), export_path))) == 100
     )  # 50 for input, 50 for output
-    assert os.listdir(os.path.join(os.getcwd(), EXPORT_PATH))[0].endswith(".csv")
+    assert os.listdir(os.path.join(os.getcwd(), export_path))[0].endswith(".csv")
     assert pd.read_csv(
-        os.path.join(os.getcwd(), EXPORT_PATH, "output_0.csv")
+        os.path.join(os.getcwd(), export_path, "output_0.csv")
     ).shape == (1, 2)
-    shutil.rmtree(os.path.join(os.getcwd(), EXPORT_PATH))
+    shutil.rmtree(os.path.join(os.getcwd(), export_path))

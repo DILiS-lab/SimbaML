@@ -1,5 +1,6 @@
 import os
 import shutil
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
@@ -84,7 +85,7 @@ def test_train_observed_do_not_change_when_called_multiple_times():
 
 
 def test_x_test_data_is_exported_when_export_path_is_provided():
-    EXPORT_PATH = "tests/prediction/time_series/test_data/export"
+    export_path = "tests/prediction/time_series/test_data/export"
     cfg = data_config.DataConfig(
         synthetic="/tests/prediction/time_series/test_data/num_species_1/simulated/",
         observed="/tests/prediction/time_series/test_data/num_species_1/real/",
@@ -92,19 +93,35 @@ def test_x_test_data_is_exported_when_export_path_is_provided():
             input_features=["Infected", "Recovered"],
             output_features=["Infected", "Recovered"],
         ),
-        export_path=EXPORT_PATH,
+        export_path=export_path,
     )
     loader = transfer_learning_data_loader.TransferLearningDataLoader(cfg)
     loader.X_test
     assert list(
-        pd.read_csv(os.path.join(os.getcwd(), EXPORT_PATH, "input_0.csv")).columns
+        pd.read_csv(os.path.join(os.getcwd(), export_path, "input_0.csv")).columns
     ) == ["Infected", "Recovered"]
-    shutil.rmtree((os.path.join(os.getcwd(), EXPORT_PATH)))
+    shutil.rmtree((os.path.join(os.getcwd(), export_path)))
+
+
+def test_x_test_data_is_not_exported_when_no_export_path_is_provided():
+    with patch("simba_ml.prediction.export") as mock_export:
+        # pylint: disable=import-outside-toplevel
+        cfg = data_config.DataConfig(
+            synthetic="/tests/prediction/time_series/test_data/num_species_1/simulated/",
+            observed="/tests/prediction/time_series/test_data/num_species_1/real/",
+            time_series=time_series_config.TimeSeriesConfig(
+                input_features=["Infected", "Recovered"],
+                output_features=["Infected", "Recovered"],
+            ),
+        )
+        loader = transfer_learning_data_loader.TransferLearningDataLoader(cfg)
+        loader.X_test
+        mock_export.assert_not_called()
 
 
 def test_x_test_data_is_exported_when_export_path_already_exists():
-    EXPORT_PATH = "tests/prediction/time_series/test_data/export"
-    os.mkdir(os.path.join(os.getcwd(), EXPORT_PATH))
+    export_path = "tests/prediction/time_series/test_data/export"
+    os.mkdir(os.path.join(os.getcwd(), export_path))
     cfg = data_config.DataConfig(
         synthetic="/tests/prediction/time_series/test_data/num_species_1/simulated/",
         observed="/tests/prediction/time_series/test_data/num_species_1/real/",
@@ -112,11 +129,11 @@ def test_x_test_data_is_exported_when_export_path_already_exists():
             input_features=["Infected", "Recovered"],
             output_features=["Infected", "Recovered"],
         ),
-        export_path=EXPORT_PATH,
+        export_path=export_path,
     )
     loader = transfer_learning_data_loader.TransferLearningDataLoader(cfg)
     _ = loader.X_test
     assert list(
-        pd.read_csv(os.path.join(os.getcwd(), EXPORT_PATH, "input_0.csv")).columns
+        pd.read_csv(os.path.join(os.getcwd(), export_path, "input_0.csv")).columns
     ) == ["Infected", "Recovered"]
-    shutil.rmtree((os.path.join(os.getcwd(), EXPORT_PATH)))
+    shutil.rmtree((os.path.join(os.getcwd(), export_path)))
