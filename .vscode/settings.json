@@ -1,4 +1,44 @@
 {
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.ipynb_checkpoints": true,
+        "**/junit": true,
+        "simba_ml/html": true,
+        "**/.pytest_cache": true,
+        "docs/build": true,
+        "htmlcov": true,
+        ".vscode": false,
+        "venv": true,
+        "**/_autosummary": true,
+        ".mypy_cache": true,
+        "dist": true,
+        "lightning_logs": true,
+        "simba_ml.egg-info": true,
+        ".coverage": true,
+        "build": true,
+        "data": true,
+    },
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pycodestyleEnabled": true,
+    "python.linting.pycodestylePath": "pycodestyle",
+    "python.linting.pycodestyleArgs": [
+        "--max-line-length=88",
+        "--max-doc-length=180"
+    ],
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "editor.formatOnSave": true,
+    "python.formatting.autopep8Args": [
+        "--max-line-length=88",
+        "--max-doc-length=180"
+    ],
+    "python.linting.pydocstyleEnabled": true,
+    "python.linting.pydocstyleArgs": [
+        "--convention=google",
+    ],
+    "python.linting.mypyEnabled": true,
 }
