@@ -48,7 +48,9 @@ def test_transfer_learning_pipeline_export() -> None:
     _ = transfer_learning_pipeline.main(
         "tests/prediction/time_series/conf/transfer_learning_pipeline_export.toml"
     ).T
-    assert len(os.listdir(os.path.join(os.getcwd(), EXPORT_PATH))) == 100 # 50 for input, 50 for output
+    assert (
+        len(os.listdir(os.path.join(os.getcwd(), EXPORT_PATH))) == 100
+    )  # 50 for input, 50 for output
     assert os.listdir(os.path.join(os.getcwd(), EXPORT_PATH))[0].endswith(".csv")
     assert pd.read_csv(
         os.path.join(os.getcwd(), EXPORT_PATH, "output_0.csv")
