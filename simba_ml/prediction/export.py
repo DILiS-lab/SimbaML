@@ -19,8 +19,12 @@ def export_input_batches(
     Args:
         data: the input batches.
         config: the data configuration.
+
+    Raises:
+        ValueError: if the export path is None.
     """
-    assert config.export_path is not None
+    if config.export_path is None:
+        raise ValueError("Export path is None.")
     for i in range(data.shape[0]):
         pd.DataFrame(
             data[i],
@@ -39,8 +43,11 @@ def export_output_batches(
     Args:
         data: prediction and y_true batches.
         config: the data configuration.
+    Raises:
+        ValueError: if the export path is None.
     """
-    assert config.export_path is not None
+    if config.export_path is None:
+        raise ValueError("Export path is None.")
     for i in range(data.shape[0]):
         pd.DataFrame(
             data[i, :, :],
@@ -49,3 +56,13 @@ def export_output_batches(
             os.path.join(os.getcwd(), config.export_path, f"output_{i}.csv"),
             index=False,
         )
+
+
+def create_path_if_not_exist(path: str) -> None:
+    """Creates a path if it does not exist.
+
+    Args:
+        path: the path to create.
+    """
+    if not os.path.exists(path):
+        os.makedirs(path)
