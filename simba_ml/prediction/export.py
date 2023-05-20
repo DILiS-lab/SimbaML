@@ -23,7 +23,7 @@ def export_input_batches(
     assert config.export_path is not None
     for i in range(data.shape[0]):
         pd.DataFrame(
-            data[i, :, :],
+            data[i],
             columns=config.time_series.input_features,
         ).to_csv(
             os.path.join(os.getcwd(), config.export_path, f"input_{i}.csv"),
