@@ -47,7 +47,7 @@ def test_transfer_learning_pipeline_export() -> None:
     export_path = "tests/prediction/time_series/test_data/export"
     if os.path.exists(os.path.join(os.getcwd(), export_path)):
         os.rmdir(os.path.join(os.getcwd(), export_path))
-    _ = transfer_learning_pipeline.main(
+    transfer_learning_pipeline.main(
         "tests/prediction/time_series/conf/transfer_learning_pipeline_export.toml"
     ).T
     assert (
