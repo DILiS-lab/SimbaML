@@ -8,6 +8,7 @@ from torch import utils
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
+from torch.optim import Adam
 
 from simba_ml.prediction.time_series.data_loader import window_generator
 from simba_ml.prediction.time_series.models import model
@@ -53,7 +54,7 @@ class TrainingParams:
     validation_split: float = 0.2
     verbose: int = 0
     accelerator: str = "auto"
-
+    learning_rate: float = 0.001
 
 @dataclasses.dataclass
 class PytorchLightningModelConfig(model.ModelConfig):
@@ -149,6 +150,7 @@ class PytorchLightningModel(model.Model):
             log_every_n_steps=len(train_loader) // 2,
             accelerator=self.model_params.training_params.accelerator,
         )
+        trainer.optimizers([Adam(params=self.model.parameters(), lr=self.model_params.training_params.learning_rate)])
         trainer.fit(self.model, train_loader)
 
     def predict(self, data: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
