@@ -46,7 +46,7 @@ def export_output_batches(
     create_path_if_not_exist(os.path.join(os.getcwd(), export_path))
     for i in range(data.shape[0]):
         pd.DataFrame(
-            data[i, :, :],
+            data[i],
             columns=output_features,
         ).to_csv(
             os.path.join(os.getcwd(), export_path, f"output-{model_name}-{i}.csv"),
