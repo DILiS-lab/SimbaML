@@ -17,3 +17,4 @@ class DataConfig:
     split_axis: str = "vertical"
     input_features: typing.Optional[list[str]] = None
     output_features: typing.Optional[list[str]] = None
+    export_path: typing.Optional[str] = None

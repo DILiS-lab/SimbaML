@@ -1,4 +1,6 @@
 import pytest
+import os
+import shutil
 
 import pandas as pd
 
@@ -107,3 +109,22 @@ def test_synthetic_data_pipeline_returns_results_correct_type_and_format() -> No
 
     assert isinstance(results, pd.DataFrame)
     assert results.shape == (7, 3)
+
+
+def test_synthetic_data_pipeline_export() -> None:
+    export_path = "tests/prediction/time_series/test_data/export"
+    if os.path.exists(os.path.join(os.getcwd(), export_path)):
+        shutil.rmtree(os.path.join(os.getcwd(), export_path))
+    synthetic_data_pipeline.main(
+        "tests/prediction/time_series/conf/synthetic_data_pipeline_export.toml"
+    ).T
+    assert (
+        len(os.listdir(os.path.join(os.getcwd(), export_path))) == 150
+    )  # 50 for input, 50 for output of each model
+    assert os.listdir(os.path.join(os.getcwd(), export_path))[0].endswith(".csv")
+    assert pd.read_csv(
+        os.path.join(
+            os.getcwd(), export_path, "output-Keras Dense Neural Network-0.csv"
+        )
+    ).shape == (1, 2)
+    shutil.rmtree(os.path.join(os.getcwd(), export_path))

@@ -46,9 +46,15 @@ def __evaluate_metrics(
     predictions: npt.NDArray[np.float64],
     experiment_logger: wandb.WandbLogger,
     config: transfer_learning_pipeline.PipelineConfig,
+    model_name: str,
 ) -> dict[str, np.float64]:
     if config.data.export_path is not None:
-        export.export_output_batches(predictions, config.data)
+        export.export_output_batches(
+            predictions,
+            config.data.export_path,
+            config.data.time_series.output_features,
+            model_name,
+        )
     evaluation = {
         metric_id: metric_function(y_true=y_test, y_pred=predictions)
         for metric_id, metric_function in metrics.items()
@@ -117,6 +123,7 @@ def main(config_path: str) -> pd.DataFrame:
             model.predict(dataloader.X_test),
             wandb_logger,
             config,
+            model_name=model.name,
         )
         wandb_logger.finish()
 

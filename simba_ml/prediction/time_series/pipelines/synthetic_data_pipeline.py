@@ -16,6 +16,7 @@ from simba_ml.prediction import plugin_loader
 from simba_ml.prediction.time_series.config.synthetic_data_pipeline import (
     pipeline_config,
 )
+from simba_ml.prediction import export
 from simba_ml.prediction.time_series.data_loader import synthetic_data_loader
 from simba_ml.prediction.time_series.metrics import metrics as metrics_module
 from simba_ml.prediction.logging import wandb_logger as wandb
@@ -42,7 +43,16 @@ def __evaluate_metrics(
     y_test: npt.NDArray[np.float64],
     predictions: npt.NDArray[np.float64],
     experiment_logger: wandb.WandbLogger,
+    config: pipeline_config.PipelineConfig,
+    model_name: str,
 ) -> dict[str, np.float64]:
+    if config.data.export_path is not None:
+        export.export_output_batches(
+            predictions,
+            config.data.export_path,
+            config.data.time_series.output_features,
+            model_name,
+        )
     evaluation = {
         metric_id: metric_function(y_true=y_test, y_pred=predictions)
         for metric_id, metric_function in metrics.items()
@@ -108,6 +118,8 @@ def main(config_path: str) -> pd.DataFrame:
             dataloader.y_test,
             model.predict(dataloader.X_test),
             wandb_logger,
+            config,
+            model.name,
         )
         wandb_logger.finish()
 

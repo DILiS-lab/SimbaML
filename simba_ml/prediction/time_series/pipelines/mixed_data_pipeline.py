@@ -15,6 +15,7 @@ from simba_ml.prediction.time_series.config.mixed_data_pipeline import pipeline_
 from simba_ml.prediction.time_series.data_loader import mixed_data_loader
 from simba_ml.prediction.time_series.metrics import metrics as metrics_module
 from simba_ml.prediction.logging import wandb_logger as wandb
+from simba_ml.prediction import export
 from simba_ml.prediction.time_series.config import (
     time_series_config,
 )
@@ -39,7 +40,16 @@ def __evaluate_metrics(
     predictions: npt.NDArray[np.float64],
     experiment_logger: wandb.WandbLogger,
     current_ratio: float,
+    config: pipeline_config.PipelineConfig,
+    model_name: str,
 ) -> dict[str, np.float64]:
+    if config.data.export_path is not None:
+        export.export_output_batches(
+            predictions,
+            config.data.export_path,
+            config.data.time_series.output_features,
+            f"{model_name}-{current_ratio}",
+        )
     evaluation = {
         metric_id: metric_function(y_true=y_test, y_pred=predictions)
         for metric_id, metric_function in metrics.items()
@@ -110,6 +120,8 @@ def main(config_path: str) -> dict[str, dict[str, dict[str, np.float64]]]:
                 model.predict(dataloader.X_test),
                 wandb_logger,
                 ratio,
+                config,
+                model.name,
             )
             wandb_logger.finish()
 

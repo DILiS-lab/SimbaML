@@ -1,6 +1,8 @@
 """Test function for the pipeline."""
 import logging
 import typing
+import os
+import shutil
 
 import pytest
 
@@ -183,3 +185,22 @@ def test_mixed_data_pipeline_returns_results_correct_type_and_format() -> None:
     assert len(results["1.0"]) == 3
     assert isinstance(results["1.0"]["Average Predictor"], typing.Dict)
     assert len(results["1.0"]["Average Predictor"]) == 3
+
+
+def test_mixed_data_pipeline_export() -> None:
+    export_path = "tests/prediction/time_series/test_data/export"
+    if os.path.exists(os.path.join(os.getcwd(), export_path)):
+        shutil.rmtree(os.path.join(os.getcwd(), export_path))
+    mixed_data_pipeline.main(
+        "tests/prediction/time_series/conf/mixed_data_pipeline_export.toml"
+    )
+    assert (
+        len(os.listdir(os.path.join(os.getcwd(), export_path))) == 150
+    )  # 50 for input, 50 for output of each model
+    assert os.listdir(os.path.join(os.getcwd(), export_path))[0].endswith(".csv")
+    assert pd.read_csv(
+        os.path.join(
+            os.getcwd(), export_path, "output-Keras Dense Neural Network-1.0-0.csv"
+        )
+    ).shape == (1, 2)
+    shutil.rmtree(os.path.join(os.getcwd(), export_path))

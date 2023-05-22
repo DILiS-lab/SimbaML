@@ -6,54 +6,50 @@ import pandas as pd
 import numpy as np
 from numpy import typing as npt
 
-from simba_ml.prediction.time_series.config.transfer_learning_pipeline import (
-    data_config,
-)
-
 
 def export_input_batches(
-    data: npt.NDArray[np.float64], config: data_config.DataConfig
+    data: npt.NDArray[np.float64], export_path: str, input_features: list[str]
 ) -> None:
     """Exports the input batches to csv files.
 
     Args:
         data: the input batches.
-        config: the data configuration.
-
-    Raises:
-        ValueError: if the export path is None.
+        export_path: the path to export the input batches to.
+        input_features: the input features.
     """
-    if config.export_path is None:
-        raise ValueError("Export path is None.")
+    create_path_if_not_exist(os.path.join(os.getcwd(), export_path))
     for i in range(data.shape[0]):
         pd.DataFrame(
             data[i],
-            columns=config.time_series.input_features,
+            columns=input_features,
         ).to_csv(
-            os.path.join(os.getcwd(), config.export_path, f"input_{i}.csv"),
+            os.path.join(os.getcwd(), export_path, f"input_{i}.csv"),
             index=False,
         )
 
 
 def export_output_batches(
-    data: npt.NDArray[np.float64], config: data_config.DataConfig
+    data: npt.NDArray[np.float64],
+    export_path: str,
+    output_features: list[str],
+    model_name: str,
 ) -> None:
     """Exports the output batches to csv files.
 
     Args:
         data: prediction and y_true batches.
-        config: the data configuration.
-    Raises:
-        ValueError: if the export path is None.
+        export_path: the path to export the output batches to.
+        output_features: the output features.
+        model_name: the name of the model for export purposes.
+
     """
-    if config.export_path is None:
-        raise ValueError("Export path is None.")
+    create_path_if_not_exist(os.path.join(os.getcwd(), export_path))
     for i in range(data.shape[0]):
         pd.DataFrame(
             data[i, :, :],
-            columns=config.time_series.output_features,
+            columns=output_features,
         ).to_csv(
-            os.path.join(os.getcwd(), config.export_path, f"output_{i}.csv"),
+            os.path.join(os.getcwd(), export_path, f"output-{model_name}-{i}.csv"),
             index=False,
         )
 

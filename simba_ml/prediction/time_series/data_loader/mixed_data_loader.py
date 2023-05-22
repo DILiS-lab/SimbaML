@@ -11,6 +11,7 @@ from simba_ml.prediction.time_series.config.mixed_data_pipeline import (
 )
 from simba_ml.prediction import preprocessing
 from simba_ml.prediction.time_series.data_loader import window_generator, splits
+from simba_ml.prediction import export
 
 
 class MixedDataLoader:
@@ -102,8 +103,13 @@ class MixedDataLoader:
         """
         if self.__X_test is None:
             self.prepare_data()
-            return self.X_test
-        return self.__X_test
+        if self.config.export_path is not None and self.__X_test is not None:
+            export.export_input_batches(
+                self.__X_test,
+                self.config.export_path,
+                self.config.time_series.input_features,
+            )
+        return self.X_test if self.__X_test is None else self.__X_test
 
     @property
     def y_test(self) -> npt.NDArray[np.float64]:
