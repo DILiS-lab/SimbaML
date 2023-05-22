@@ -49,12 +49,14 @@ def test_transfer_learning_pipeline_export() -> None:
         shutil.rmtree(os.path.join(os.getcwd(), export_path))
     transfer_learning_pipeline.main(
         "tests/prediction/time_series/conf/transfer_learning_pipeline_export.toml"
-    ).T
+    )
     assert (
         len(os.listdir(os.path.join(os.getcwd(), export_path))) == 150
     )  # 50 for input, 50 for output of each model
     assert os.listdir(os.path.join(os.getcwd(), export_path))[0].endswith(".csv")
     assert pd.read_csv(
-        os.path.join(os.getcwd(), export_path, "output-Keras Dense Neural Network-0.csv")
+        os.path.join(
+            os.getcwd(), export_path, "output-Keras Dense Neural Network-0.csv"
+        )
     ).shape == (1, 2)
     shutil.rmtree(os.path.join(os.getcwd(), export_path))

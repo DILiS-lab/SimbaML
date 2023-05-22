@@ -1,7 +1,7 @@
-import pytest
 import os
 import shutil
 
+import pytest
 import pandas as pd
 
 from simba_ml.prediction.time_series.pipelines import synthetic_data_pipeline
@@ -117,7 +117,7 @@ def test_synthetic_data_pipeline_export() -> None:
         shutil.rmtree(os.path.join(os.getcwd(), export_path))
     synthetic_data_pipeline.main(
         "tests/prediction/time_series/conf/synthetic_data_pipeline_export.toml"
-    ).T
+    )
     assert (
         len(os.listdir(os.path.join(os.getcwd(), export_path))) == 150
     )  # 50 for input, 50 for output of each model
