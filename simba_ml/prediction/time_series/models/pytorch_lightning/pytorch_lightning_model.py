@@ -1,5 +1,6 @@
 """Provides a model that predicts next timesteps from with a\
      pytorch lightning architecture."""
+import os
 import abc
 import dataclasses
 
@@ -57,6 +58,7 @@ class TrainingParams:
     epochs: int = 10
     finetuning_epochs: int | None = None
     show_progress_bar: bool = True
+    num_workers: int | None = os.cpu_count()
 
 
 @dataclasses.dataclass
@@ -127,7 +129,16 @@ class PytorchLightningModel(model.Model):
 
         Args:
             train: training data.
+
+        Raises:
+
         """
+        if self.model_params.training_params.num_workers is None:
+            raise ValueError(
+                "The number of available cpus could not be determined."
+                "Please set the number of workers manually in the config."
+            )
+
         train = [array.astype(np.float32) for array in train]
 
         if self.model_params.normalize:
@@ -144,8 +155,8 @@ class PytorchLightningModel(model.Model):
         ] = utils.data.DataLoader(
             train_data,  # type: ignore[arg-type]
             batch_size=self.model_params.training_params.batch_size,
+            num_workers=self.model_params.training_params.num_workers,
             shuffle=True,
-            num_workers=0,
         )
         self.start_trainer(train_loader)
 
