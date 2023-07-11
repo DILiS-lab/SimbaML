@@ -108,14 +108,15 @@ def test_has_kinetic_parameters():
 def create_example_prediciton_task(number_of_timestamps=200):
     name = "Constant function"
     timestamps = distributions.Constant(number_of_timestamps)
-
     specieses = [Species("y", distributions.Constant(0))]
-
     kinetic_parameters = {
         "Useless": kinetic_parameters_module.ConstantKineticParameter(
             distributions.Constant(1)
         )
     }
+    solver_method = "RK45"
+    atol = 1e-8
+    rtol = 1e-5
 
     def deriv(_t, _y, _arguments):
         """Derivative of the function at the point _t.
@@ -135,5 +136,8 @@ def create_example_prediciton_task(number_of_timestamps=200):
         deriv=deriv,
         noiser=noiser,
         timestamps=timestamps,
+        solver_method=solver_method,
+        atol=atol,
+        rtol=rtol,
     )
     return sm

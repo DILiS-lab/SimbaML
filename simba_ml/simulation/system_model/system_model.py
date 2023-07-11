@@ -97,6 +97,8 @@ class SystemModel:
         deriv_noiser: derivative_noiser.DerivNoiser[KineticParameterType] | None = None,
         timestamps: distributions.Distribution[float] | None = None,
         solver_method: str = "LSODA",
+        atol: float = 1e-6,
+        rtol: float = 1e-3,
     ):
         """Inits PredictionTask with the provided params.
 
@@ -116,6 +118,8 @@ class SystemModel:
                 of generating data for .
             solver_method: The solver used to solve ODEs.
                 Corresponds to scipy.integrate.solve_ivp(). Default is `LSODA`.
+            atol: Absolute tolerance passed to scipy.integrate.solve_ivp().
+            rtol: Relative tolerance passed to scipy.integrate.solve_ivp().
         """
         self.__name = name
         self.__specieses: dict[str, species.Species] = {
@@ -128,6 +132,8 @@ class SystemModel:
         self.timestamps = timestamps or distributions.Constant(1500.0)
         self.__deriv = deriv
         self.solver_method = solver_method
+        self.atol = atol
+        self.rtol = rtol
 
     def __get_t(self, timestamps: int | None = None) -> np.typing.NDArray[np.float64]:
         """Returns an array of timestamps in range `[0, timestamps)`.
@@ -326,6 +332,8 @@ class SystemModel:
             t_eval=t,
             method=self.solver_method,
             args=(self.kinetic_parameters,),
+            atol=self.atol,
+            rtol=self.rtol,
         )
 
         return (
