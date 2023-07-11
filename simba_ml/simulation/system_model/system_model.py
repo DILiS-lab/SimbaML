@@ -35,6 +35,8 @@ class SystemModel:
             of generating data for.
         solver_method: The solver used to solve ODEs.
             Corresponds to scipy.integrate.solve_ivp(). Default is `LSODA`.
+        atol: Absolute tolerance passed to scipy.integrate.solve_ivp().
+        rtol: Relative tolerance passed to scipy.integrate.solve_ivp().
     """
 
     # pylint: disable=too-many-arguments
@@ -119,7 +121,9 @@ class SystemModel:
             solver_method: The solver used to solve ODEs.
                 Corresponds to scipy.integrate.solve_ivp(). Default is `LSODA`.
             atol: Absolute tolerance passed to scipy.integrate.solve_ivp().
+                Default is 1e-6.
             rtol: Relative tolerance passed to scipy.integrate.solve_ivp().
+                Default is 1e-3.
         """
         self.__name = name
         self.__specieses: dict[str, species.Species] = {
