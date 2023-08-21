@@ -20,7 +20,7 @@ def train_test_split_vertical(
     test = []
     train = []
     for dataFrame in data:
-        test_train_split = int(round(dataFrame.shape[0] * (1 - test_split)))
+        test_train_split = round(dataFrame.shape[0] * (1 - test_split))
         train_validation_df = dataFrame.iloc[:test_train_split].reset_index(drop=True)
         train.append(train_validation_df)
         test.append(
@@ -47,7 +47,7 @@ def train_test_split_horizontal(
     train = []
     random.shuffle(data)
     total_data_len = len(data)
-    test_train_split = int(round(-total_data_len * test_split))
+    test_train_split = round(-total_data_len * test_split)
     test = data[test_train_split:]
     train = data[:test_train_split]
     return train, test
