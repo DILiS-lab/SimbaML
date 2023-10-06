@@ -2,7 +2,6 @@
 import warnings
 import pytest
 import numpy as np
-import torch
 from simba_ml.prediction.time_series.metrics import factory
 from simba_ml.prediction.time_series.metrics import metrics
 
