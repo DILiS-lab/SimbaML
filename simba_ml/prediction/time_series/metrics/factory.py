@@ -49,6 +49,7 @@ def create(metric_id: str) -> metrics.Metric:
 
 
 register("mean_directional_accuracy", metrics.mean_directional_accuracy)
+register("prediction_trend_accuracy", metrics.prediction_trend_accuracy)
 register("r_square", metrics.r_square)
 register("mean_absolute_error", metrics.mean_absolute_error)
 register("mean_squared_error", metrics.mean_squared_error)
