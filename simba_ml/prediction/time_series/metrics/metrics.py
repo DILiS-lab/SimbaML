@@ -311,7 +311,7 @@ def mean_directional_accuracy(
 
 def __prediction_trend_accuracy_matrix(
     y_true: npt.NDArray[np.float64], y_pred: npt.NDArray[np.float64]
-) -> npt.NDArray[np.float64]:#
+) -> npt.NDArray[np.float64]:  #
     return np.array(
         [
             np.mean(
