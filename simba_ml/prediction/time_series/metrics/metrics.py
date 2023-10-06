@@ -326,14 +326,14 @@ def __prediction_trend_accuracy_matrix(
 def prediction_trend_accuracy(
     y_true: npt.NDArray[np.float64], y_pred: npt.NDArray[np.float64]
 ) -> np.float64:
-    """Calculates the mean directional accuracy.
+    """Calculates the prediction trend accuracy.
 
     Args:
         y_true: The ground truth labels.
         y_pred: The predicted labels.
 
     Returns:
-        The mean directional accuracy.
+        The prediction trend accuracy.
     """
     return np.average(__prediction_trend_accuracy_matrix(y_true, y_pred))
 
