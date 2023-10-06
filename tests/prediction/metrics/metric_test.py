@@ -2,6 +2,7 @@
 import warnings
 import pytest
 import numpy as np
+import torch
 from simba_ml.prediction.time_series.metrics import factory
 from simba_ml.prediction.time_series.metrics import metrics
 
@@ -220,60 +221,24 @@ def test_rmsle_2():
 
 def test_mean_absolute_scaled_error_1():
     y_true = np.array(
-        [
-            [
-                [1, 1, 1],
-                [2, 2, 2],
-                [3, 3, 3],
-            ],
-            [
-                [1, 1, 1],
-                [2, 2, 2],
-                [3, 3, 3],
-            ],
-        ]
+        [[[1, 1, 1], [2, 2, 2], [3, 3, 3],],
+         [[1, 1, 1], [2, 2, 2], [3, 3, 3],],]
     )
     y_pred = np.array(
-        [
-            [
-                [2, 2, 2],
-                [1, 1, 1],
-                [2, 2, 2],
-            ],
-            [[2, 2, 2], [1, 1, 1], [2, 2, 2]],
-        ]
+        [[[2, 2, 2], [1, 1, 1], [2, 2, 2],],
+         [[2, 2, 2], [1, 1, 1], [2, 2, 2],],]
     )
     assert metrics.mean_absolute_scaled_error(y_true, y_pred) == 1
 
 
 def test_mean_absolute_scaled_error_2():
     y_true = np.array(
-        [
-            [
-                [1, 1, 1],
-                [3, 3, 3],
-                [5, 5, 5],
-            ],
-            [
-                [1, 1, 1],
-                [3, 3, 3],
-                [5, 5, 5],
-            ],
-        ]
+        [[[1, 1, 1],[3, 3, 3],[5, 5, 5],],
+         [[1, 1, 1],[3, 3, 3],[5, 5, 5],],]
     )
     y_pred = np.array(
-        [
-            [
-                [5, 5, 5],
-                [7, 7, 7],
-                [9, 9, 9],
-            ],
-            [
-                [5, 5, 5],
-                [7, 7, 7],
-                [9, 9, 9],
-            ],
-        ]
+        [[[5, 5, 5],[7, 7, 7],[9, 9, 9],],
+         [[5, 5, 5],[7, 7, 7],[9, 9, 9],],]
     )
     assert metrics.mean_absolute_scaled_error(y_true, y_pred) == 2
 

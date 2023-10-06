@@ -283,11 +283,6 @@ def mean_absolute_percentage_error(
 def __mean_directional_accuracy_matrix(
     y_true: npt.NDArray[np.float64], y_pred: npt.NDArray[np.float64]
 ) -> npt.NDArray[np.float64]:
-    test = [
-                (np.sign(y_true[i, 1:] - y_true[i, :-1]))
-                == np.sign(y_pred[i, 1:] - y_true[i, :-1])
-            for i in range(y_true.shape[0])
-        ]
     return np.array(
         [
             np.mean(
@@ -317,11 +312,6 @@ def mean_directional_accuracy(
 def __prediction_trend_accuracy_matrix(
     y_true: npt.NDArray[np.float64], y_pred: npt.NDArray[np.float64]
 ) -> npt.NDArray[np.float64]:#
-    test = [
-                (np.sign(y_true[i, 1:] - y_true[i, :-1]))
-                == np.sign(y_pred[i, 1:] - y_pred[i, :-1])
-            for i in range(y_true.shape[0])
-        ]
     return np.array(
         [
             np.mean(
