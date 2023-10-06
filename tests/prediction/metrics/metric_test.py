@@ -113,7 +113,13 @@ def test_mean_absolute_error_matrix_perfect_score():
 def test_mean_directional_accuracy():
     y_true = np.array([[[4, 5, 6], [6, 5, 4], [7, 7, 7]]])
     y_pred = np.array([[[3, 4, 5], [2, 4, 4], [3, 3, 3]]])
-    assert metrics.mean_directional_accuracy(y_true, y_pred) == 0.5
+    assert metrics.mean_directional_accuracy(y_true, y_pred) == (1/6)
+
+
+def test_prediction_trend_accuracy():
+    y_true = np.array([[[4, 5, 6], [6, 5, 4], [7, 7, 7]]])
+    y_pred = np.array([[[3, 4, 5], [2, 4, 4], [3, 3, 3]]])
+    assert metrics.prediction_trend_accuracy(y_true, y_pred) == 0.5
 
 
 def test_mean_squared_error_matrix_perfect_score():

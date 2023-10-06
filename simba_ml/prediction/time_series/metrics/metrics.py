@@ -283,11 +283,16 @@ def mean_absolute_percentage_error(
 def __mean_directional_accuracy_matrix(
     y_true: npt.NDArray[np.float64], y_pred: npt.NDArray[np.float64]
 ) -> npt.NDArray[np.float64]:
+    test = [
+                (np.sign(y_true[i, 1:] - y_true[i, :-1]))
+                == np.sign(y_pred[i, 1:] - y_true[i, :-1])
+            for i in range(y_true.shape[0])
+        ]
     return np.array(
         [
             np.mean(
                 (np.sign(y_true[i, 1:] - y_true[i, :-1]))
-                == np.sign(y_pred[i, 1:] - y_pred[i, :-1])
+                == np.sign(y_pred[i, 1:] - y_true[i, :-1])
             )
             for i in range(y_true.shape[0])
         ]
@@ -307,6 +312,40 @@ def mean_directional_accuracy(
         The mean directional accuracy.
     """
     return np.average(__mean_directional_accuracy_matrix(y_true, y_pred))
+
+
+def __prediction_trend_accuracy_matrix(
+    y_true: npt.NDArray[np.float64], y_pred: npt.NDArray[np.float64]
+) -> npt.NDArray[np.float64]:#
+    test = [
+                (np.sign(y_true[i, 1:] - y_true[i, :-1]))
+                == np.sign(y_pred[i, 1:] - y_pred[i, :-1])
+            for i in range(y_true.shape[0])
+        ]
+    return np.array(
+        [
+            np.mean(
+                (np.sign(y_true[i, 1:] - y_true[i, :-1]))
+                == np.sign(y_pred[i, 1:] - y_pred[i, :-1])
+            )
+            for i in range(y_true.shape[0])
+        ]
+    )
+
+
+def prediction_trend_accuracy(
+    y_true: npt.NDArray[np.float64], y_pred: npt.NDArray[np.float64]
+) -> np.float64:
+    """Calculates the mean directional accuracy.
+
+    Args:
+        y_true: The ground truth labels.
+        y_pred: The predicted labels.
+
+    Returns:
+        The mean directional accuracy.
+    """
+    return np.average(__prediction_trend_accuracy_matrix(y_true, y_pred))
 
 
 def root_mean_squared_error(
