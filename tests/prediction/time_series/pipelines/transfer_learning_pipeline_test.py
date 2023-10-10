@@ -1,9 +1,11 @@
 """Test function for the pipeline."""
 import os
 import shutil
+import csv
 
 import pytest
 import pandas as pd
+import numpy as np
 
 from simba_ml.prediction.time_series.pipelines import transfer_learning_pipeline
 from simba_ml.prediction.time_series.config import (
@@ -51,15 +53,23 @@ def test_transfer_learning_pipeline_export() -> None:
         "tests/prediction/time_series/conf/transfer_learning_pipeline_export.toml"
     )
     assert (
-        len(os.listdir(os.path.join(os.getcwd(), export_path))) == 200
-    )  # 50 for X_test, 50 for y_true, 50 for y_pred of each model (here 2 models)
-    assert os.listdir(os.path.join(os.getcwd(), export_path))[0].endswith(".csv")
-    assert pd.read_csv(
+        len(os.listdir(os.path.join(os.getcwd(), export_path))) == 5
+    )
+    assert os.listdir(os.path.join(os.getcwd(), export_path))[0].endswith(".npy")
+    assert np.load(
         os.path.join(
-            os.getcwd(), export_path, "Keras Dense Neural Network-y_pred-0.csv"
+            os.getcwd(), export_path, "Keras Dense Neural Network-y_pred.npy"
         )
-    ).shape == (1, 2)
-    assert pd.read_csv(
-        os.path.join(os.getcwd(), export_path, "y_true-0.csv")
-    ).shape == (1, 2)
+    ).shape == (50, 1, 2)
+    assert np.load(
+        os.path.join(os.getcwd(), export_path, "y_true.npy")
+    ).shape == (50, 1, 2)
+    with open(
+        os.path.join(os.getcwd(), export_path, "features.csv"),
+        newline="",
+        encoding="utf-8",
+    ) as f:
+        reader = csv.reader(f)
+        data = list(reader)
+        assert data == [["Infected", "Recovered"]]
     shutil.rmtree(os.path.join(os.getcwd(), export_path))

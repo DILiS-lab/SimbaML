@@ -47,15 +47,13 @@ def __evaluate_metrics(
     model_name: str,
 ) -> dict[str, np.float64]:
     if config.data.export_path is not None:
-        export.export_batches(
+        export.export_data(
             data=y_pred,
-            features=config.data.time_series.output_features,
             export_path=config.data.export_path,
             file_name=f"{model_name}-y_pred",
         )
-        export.export_batches(
+        export.export_data(
             data=y_test,
-            features=config.data.time_series.output_features,
             export_path=config.data.export_path,
             file_name="y_true",
         )

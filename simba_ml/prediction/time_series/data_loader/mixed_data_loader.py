@@ -104,11 +104,14 @@ class MixedDataLoader:
         if self.__X_test is None:
             self.prepare_data()
         if self.config.export_path is not None and self.__X_test is not None:
-            export.export_batches(
+            export.export_data(
                 data=self.__X_test,
                 export_path=self.config.export_path,
-                features=self.config.time_series.input_features,
                 file_name="X_test",
+            )
+            export.export_features(
+                features=self.config.time_series.input_features,
+                export_path=self.config.export_path,
             )
         return self.X_test if self.__X_test is None else self.__X_test
 

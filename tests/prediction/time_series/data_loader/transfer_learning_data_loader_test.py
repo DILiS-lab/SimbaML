@@ -97,14 +97,16 @@ def test_x_test_data_is_exported_when_export_path_is_provided():
     )
     loader = transfer_learning_data_loader.TransferLearningDataLoader(cfg)
     loader.X_test  # pylint: disable=pointless-statement
-    assert list(
-        pd.read_csv(os.path.join(os.getcwd(), export_path, "X_test-0.csv")).columns
-    ) == ["Infected", "Recovered"]
+    assert np.load(os.path.join(os.getcwd(), export_path, "X_test.npy")).shape == (
+        50,
+        1,
+        2,
+    )
     shutil.rmtree((os.path.join(os.getcwd(), export_path)))
 
 
 def test_x_test_data_is_not_exported_when_no_export_path_is_provided():
-    with patch("simba_ml.prediction.export.export_batches") as mock_export:
+    with patch("simba_ml.prediction.export.export_data") as mock_export:
         # pylint: disable=import-outside-toplevel
         cfg = data_config.DataConfig(
             synthetic="/tests/prediction/time_series/test_data/num_species_1/simulated/",  # pylint: disable=line-too-long
@@ -133,7 +135,9 @@ def test_x_test_data_is_exported_when_export_path_already_exists():
     )
     loader = transfer_learning_data_loader.TransferLearningDataLoader(cfg)
     loader.X_test  # pylint: disable=pointless-statement
-    assert list(
-        pd.read_csv(os.path.join(os.getcwd(), export_path, "X_test-0.csv")).columns
-    ) == ["Infected", "Recovered"]
+    assert np.load(os.path.join(os.getcwd(), export_path, "X_test.npy")).shape == (
+        50,
+        1,
+        2,
+    )
     shutil.rmtree((os.path.join(os.getcwd(), export_path)))
