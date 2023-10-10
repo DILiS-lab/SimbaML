@@ -3,7 +3,6 @@ import shutil
 from unittest.mock import patch
 
 import numpy as np
-import pandas as pd
 
 from simba_ml.prediction.time_series.config.transfer_learning_pipeline import (
     data_config,
