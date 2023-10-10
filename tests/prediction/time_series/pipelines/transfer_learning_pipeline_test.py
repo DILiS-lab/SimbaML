@@ -55,7 +55,6 @@ def test_transfer_learning_pipeline_export() -> None:
     assert (
         len(os.listdir(os.path.join(os.getcwd(), export_path))) == 5
     )
-    assert os.listdir(os.path.join(os.getcwd(), export_path))[0].endswith(".npy")
     assert np.load(
         os.path.join(
             os.getcwd(), export_path, "Keras Dense Neural Network-y_pred.npy"

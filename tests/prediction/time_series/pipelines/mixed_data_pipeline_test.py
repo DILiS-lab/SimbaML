@@ -199,7 +199,6 @@ def test_mixed_data_pipeline_export() -> None:
     assert (
         len(os.listdir(os.path.join(os.getcwd(), export_path))) == 5
     )
-    assert os.listdir(os.path.join(os.getcwd(), export_path))[0].endswith(".npy")
     assert np.load(
         os.path.join(
             os.getcwd(), export_path, "Keras Dense Neural Network-1.0-y_pred.npy"

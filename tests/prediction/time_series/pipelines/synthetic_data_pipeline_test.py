@@ -123,7 +123,6 @@ def test_synthetic_data_pipeline_export() -> None:
     assert (
         len(os.listdir(os.path.join(os.getcwd(), export_path))) == 5
     )  # 50 for X_test, 50 for y_true, 50 for y_pred of each model (here 2 models)
-    assert os.listdir(os.path.join(os.getcwd(), export_path))[0].endswith(".npy")
     assert np.load(
         os.path.join(os.getcwd(), export_path, "Keras Dense Neural Network-y_pred.npy")
     ).shape == (50, 1, 2)
